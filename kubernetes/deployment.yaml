@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: myimage2
-          image: suhaspete/shoppie-master # Update this line with your Docker image
+          image: myimage2 # Update this line with your Docker image
           ports:
             - containerPort: 80
