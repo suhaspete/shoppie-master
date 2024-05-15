@@ -9,6 +9,6 @@ spec:
     app: myimage2
   ports:
     - protocol: TCP
-      port: 84
+      port: 80
       targetPort: 80
   type: LoadBalancer
