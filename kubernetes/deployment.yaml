@@ -1,21 +1,57 @@
-# deployment.yaml
+# # deployment.yaml
 
-apiVersion: apps/v1
-kind: Deployment
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: myimage2
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: myimage2
+#   template:
+#     metadata:
+#       labels:
+#         app: myimage2
+#     spec:
+#       containers:
+#         - name: myimage2
+#           image: myimage2 # Update this line with your Docker image
+#           ports:
+#             - containerPort: 80
+
+
+
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
-  name: myimage2
+  name: my-frontend-rollout
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: myimage2
+      app: my-frontend-app
   template:
     metadata:
       labels:
-        app: myimage2
+        app: my-frontend-app
     spec:
       containers:
-        - name: myimage2
-          image: myimage2 # Update this line with your Docker image
+        - name: my-frontend-app
+          image: myimage2
           ports:
             - containerPort: 80
+  strategy:
+    canary:
+      steps:
+        - setWeight: 10
+          pause:
+            duration: 60s
+        - setWeight: 25
+          pause:
+            duration: 60s
+        - setWeight: 50
+          pause:
+            duration: 60s
+        - setWeight: 100
+  # Add additional fields as needed
